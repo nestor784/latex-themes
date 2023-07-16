@@ -1,0 +1,72 @@
+\documentclass{beamer}
+\usetheme{uis}
+\usepackage{graphicx}
+\usepackage[spanish]{babel}
+\title[Diapositivas en Beamer]{Latex Template UIS}
+\author{Nestor Jaraba}
+\institute[UIS]{Universidad Industrial de Santander}
+
+\begin{document}
+
+\maketitle
+
+\section{Seccion 1}
+\begin{uis-frame}{Frame simple}
+	Varius risus quis nulla. Vivamus vel magna. Ut rutrum. Aenean dignissim, leo
+	quis faucibus semper, massa est faucibus massa, sit amet pharetra arcu nunc et
+	sem. Aliquam tempor. Nam lobortis sem non urna. Pellentesque et urna sit amet
+	leo accumsan volutpat. Nam molestie lobortis lorem. Quisque eu nulla. Donec id
+	orci in ligula dapibus egestas. Donec sed velit ac lectus mattis sagittis.
+
+	
+
+	\begin{block}{Teorema}
+		Esto es una prueba del texto, \textbf{negrita}, \textit{italica}, \underline{subrayado}.
+	\end{block}
+\end{uis-frame}
+
+\begin{uis-frame}{Listas}
+	Esto es una lista de prueba
+	\begin{itemize}
+		\item A
+		\begin{itemize}
+		  \item A
+		    \begin{itemize}
+		      \item A
+		    \end{itemize}
+		\end{itemize}
+		\item B
+		\item C
+	\end{itemize}
+\end{uis-frame}
+
+\begin{uis-frame}{Enumeraciones}
+	\begin{enumerate}
+		\item Perro
+		\begin{enumerate}
+		  \item Perro belga
+		\end{enumerate}
+		\item Gato
+		\item Loro
+	\end{enumerate}
+\end{uis-frame}
+
+\section{Seccion 2}
+\begin{uis-frame}{Example block}
+	\begin{exampleblock}{Ejemplo}
+		Esto es una prueba del texto, \textbf{negrita}, \textit{italica}, \underline{subrayado}.
+	\end{exampleblock}
+	\begin{alertblock}{Ohh!}
+	  Alerta Alerta
+	\end{alertblock}
+\end{uis-frame}
+
+\begin{uis-frame}{Teorema}
+	\begin{theorem}{Teorema}
+		Sea $x\in A$, entonces...
+	\end{theorem}
+\end{uis-frame}
+
+\uisthanks
+
+\end{document}

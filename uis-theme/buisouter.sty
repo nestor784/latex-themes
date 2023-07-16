@@ -1,0 +1,48 @@
+\RequirePackage{buiscolor, xcolor}
+
+% Set configuration of the footline
+\setbeamertemplate{footline}{%
+  \hbox{%
+  \begin{beamercolorbox}[wd=0.33\paperwidth, ht=2.5mm, dp=1mm]{footline1}%
+    \enspace\insertshortinstitute
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=0.33\paperwidth, ht=2.5mm, dp=1mm, center]{footline2}%
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=0.34\paperwidth, right, ht=2.5mm, dp=1mm]{footline1}%
+    \enspace\the\year{}\flyear\enspace
+  \end{beamercolorbox}%
+  \vspace*{0pt}
+  }
+}
+
+% Set configuration of the headline
+\newcommand{\headlinew}[1]{
+  \ifstrequal{#1}{uis-title}{%
+    \setbeamertemplate{headline}{
+      \begin{beamercolorbox}[wd=\paperwidth,ht=3mm,dp=2mm]{headline}
+      \end{beamercolorbox}
+    }
+  }{}
+  \ifstrequal{#1}{uis-tofc}{%
+    \setbeamertemplate{headline}{}
+  }{}
+  \ifstrequal{#1}{uis-main}{%
+    \setbeamertemplate{headline}{
+      \begin{beamercolorbox}[wd=\paperwidth,ht=3mm,dp=3mm]{headline}
+	\insertnavigation{\paperwidth}
+      \end{beamercolorbox}
+    }
+  }{}
+  \ifstrequal{#1}{uis-thanks}{%
+    \setbeamertemplate{headline}{
+      \hbox{%
+      \begin{beamercolorbox}[wd=\paperwidth, ht=2.5mm, dp=1mm]{headline}%
+	\enspace\insertinstitute \hfill
+	\enspace\the\year{}\flyear\enspace
+      \end{beamercolorbox}%
+      }
+    }
+  }{}
+}
+
+\setbeamertemplate{navigation symbols}{}

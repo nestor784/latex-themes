@@ -1,0 +1,163 @@
+%Provide name of the package
+\ProvidesPackage{beamerthemeuis}
+
+% Required Packages
+\RequirePackage{tikz, geometry, graphicx, etoolbox}
+\geometry{paperwidth=16cm, paperheight=9cm}
+\RequirePackage{buiscolor, buisinner, buisouter}
+
+%add background image
+\pgfdeclareimage[interpolate=true,width=\paperwidth,height=\paperheight]{background}{assets/background}
+%Add uis logo
+\pgfdeclareimage[width=0.09\paperwidth]{logo}{assets/logo}
+\pgfdeclareimage[width=0.09\paperwidth]{logo_horz}{assets/logo_horz}
+
+% Commands
+%year with semester
+\newcommand{\flyear}{\ifnumgreater{6}{\month{}}{-II}{-I}}
+
+% Change color theme according to slide e.g.
+% primary slide or table of contents slided or thanks slide.
+\newcommand{\themecolor}[1]{%
+  \ifstrequal{#1}{uis-title}{%
+    \setbeamercolor{title}{bg=uis-olivine,fg=white}
+    \setbeamercolor{normal text}{bg=white}
+    \setbeamercolor{footline1}{fg=white,bg=uis-avocado}%
+    \setbeamercolor{footline2}{fg=white,bg=uis-mantis}%
+    \setbeamercolor{headline}{bg=uis-olivine}
+  }{}
+  \ifstrequal{#1}{uis-main}{%
+    \setbeamercolor{normal text}{fg=uis-black}
+    \setbeamercolor{structure}{fg=white, bg=uis-avocado}%
+    \setbeamercolor{local structure}{fg=uis-black,bg=uis-silver}
+    \setbeamercolor{footline1}{fg=white,bg=uis-avocado}%
+    \setbeamercolor{headline}{fg=white,bg=white}
+    \setbeamercolor{footline2}{fg=white,bg=uis-mantis}%
+    \setbeamercolor{section in head/foot}{fg=uis-avocado,bg=uis-avocado}
+    \setbeamercolor{frametitle}{fg=white}
+    \setbeamercolor{navigation symbols}{bg=uis-silver, fg=uis-grey}
+    \setbeamercolor{block body}{bg=uis-black!70!white,fg=white}
+    \setbeamercolor{block title}{bg=uis-black,fg=white}
+    \setbeamercolor{block body alerted}{fg=uis-black,bg=uis-red!70!white}
+    \setbeamercolor{block title alerted}{bg=uis-red,fg=white}
+    \setbeamercolor{block body example}{bg=uis-orange!70!white,fg=uis-black}
+    \setbeamercolor{block title example}{bg=uis-orange,fg=white}
+  }{}
+  \ifstrequal{#1}{uis-tofc}{%
+    \setbeamercolor{normal text}{fg=uis-avocado,bg=white}%
+    \setbeamercolor{item}{fg=uis-avocado}
+    \setbeamercolor{structure}{fg=white, bg=uis-avocado}%
+    \setbeamercolor{section in toc}{fg=uis-avocado}
+    \setbeamercolor{section in toc shaded}{fg=uis-avocado,bg=uis-avocado}
+    \setbeamercolor{footline1}{fg=white,bg=}
+    \setbeamercolor{footline2}{fg=white,bg=}
+  }{}
+  \ifstrequal{#1}{uis-thanks}{
+    \setbeamercolor{normal text}{fg=uis-black,bg=white}
+    \setbeamercolor{headline}{fg=white,bg=uis-avocado}
+    \setbeamercolor{footline1}{fg=white,bg=}
+    \setbeamercolor{footline2}{fg=white,bg=}
+    \setbeamercolor{navigation symbols}{bg=uis-silver, fg=uis-grey}
+  }{}
+}
+
+% Thanks slide
+\newcommand{\uisthanks}{
+\begingroup
+  \themecolor{uis-thanks}
+  \setbeamertemplate{footline}{}
+  \headlinew{uis-thanks}
+  \begin{frame}
+    \begin{picture}(0,0)
+      \put(0,0){
+	\begin{minipage}{\textwidth}
+	  \vskip10pt
+	  \centering 
+	  {\Huge\emph{¡Muchas gracias por escuchar!}}
+	  \vskip12pt
+	  {\tiny\emph{nestorjari784@gmail.com}}\\
+	  {\tiny \emph{https://github.com/nestor784}}
+	\end{minipage}
+      }
+      \put(0,-152){\pgfuseimage{logo}}
+      \put(370,-130){{\tiny Página \insertpagenumber}}
+    \end{picture}
+  \end{frame}
+\endgroup
+}
+
+% Set configuration of the table of contents slide.
+\AtBeginSection[]
+{
+\begingroup
+  \setbeamertemplate{footline}{}
+  \themecolor{uis-tofc}
+  \headlinew{uis-tofc}
+  \setbeamertemplate{section in toc}[circle]
+  \begin{frame}
+  \frametitle{Tabla de Contenidos} 
+  \tableofcontents[currentsection]
+  \begin{picture}(0,0)
+    \put(370,113){\pgfuseimage{logo}}
+  \end{picture}
+  \end{frame}
+\endgroup
+}
+
+
+% Maketitle
+\renewcommand{\maketitle}{
+  \usebackgroundtemplate{\tikz\node[opacity=0.7, inner sep=0] {\pgfuseimage{background}};}
+  \themecolor{uis-title}
+  \headlinew{uis-title}
+  \begin{frame}[c]
+    \begin{picture}(0,0)
+      \put(0,0){%
+	\begin{minipage}{\textwidth}
+	      \titlepage
+	\end{minipage}
+      }
+      \put(-20,-141){\pgfuseimage{logo}} 
+    \end{picture}
+  \end{frame}
+  \usebackgroundtemplate{}
+}
+
+\newenvironment{uis-frame}[1]{%
+  \begingroup
+  \themecolor{uis-main}
+  \headlinew{uis-main}
+  \setbeamertemplate{frametitle}{
+    \vspace*{3ex}
+    \begin{beamercolorbox}[wd=\paperwidth,ht=6mm,dp=3mm]{frametitle}
+      \usebeamerfont{frametitle}\enspace\insertframetitle
+    \end{beamercolorbox}
+  }
+  \begin{frame}{#1}
+  \hspace*{0.075\textwidth}%
+  \minipage{0.85\textwidth}%
+  \usebeamercolor[fg]{normal text}
+}{
+  \endminipage
+  \begin{picture}(0,0)
+    \put(-390,-100){\pgfuseimage{logo_horz}}
+  \end{picture}
+  \end{frame}
+  \endgroup
+}
+
+
+\setbeamertemplate{title page}{%
+  \begingroup
+	\hfill
+	\begin{beamercolorbox}[wd=0.7\textwidth,sep=10mm,rounded=true,center]{title}
+	{\usebeamerfont{title}\inserttitle}
+	\vspace*{5mm}
+
+	{\usebeamerfont{author}\insertauthor}
+	\end{beamercolorbox}
+	\hfill\hfill
+  \endgroup
+}
+
+
