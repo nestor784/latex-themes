@@ -1,0 +1,161 @@
+%Provide name of the package
+\ProvidesPackage{beamerthemeharu}
+
+% Required Packages
+\RequirePackage{tikz, textpos, geometry, graphicx, etoolbox}
+\geometry{paperwidth=16cm, paperheight=9cm}
+\RequirePackage{bharucolor, bharuinner, bharuouter}
+
+%add background image
+\pgfdeclareimage[interpolate=true,width=\paperwidth,height=\paperheight]{background}{assets/background}
+%Add uis logo
+\pgfdeclareimage[width=0.09\paperwidth]{logo}{assets/logo}
+\pgfdeclareimage[width=0.09\paperwidth]{logo_horz}{assets/logo_horz}
+
+% Commands
+%year with semester
+\newcommand{\flyear}{\ifnumgreater{6}{\month{}}{-II}{-I}}
+
+% Change color theme according to slide e.g.
+% primary slide or table of contents slided or thanks slide.
+\newcommand{\themecolor}[1]{%
+  \ifstrequal{#1}{haru-title}{%
+    \setbeamercolor{title}{bg=haru-cromeblue,fg=haru-whiteblue}
+    \setbeamercolor{normal text}{bg=haru-whiteblue}
+    \setbeamercolor{footline1}{fg=haru-whiteblue,bg=haru-solidblue}%
+    \setbeamercolor{footline2}{fg=haru-whiteblue,bg=haru-cyan2}%
+    \setbeamercolor{headline}{bg=haru-silverblue}
+  }{}
+  \ifstrequal{#1}{haru-main}{%
+    \setbeamercolor{normal text}{fg=haru-darkblue}
+    \setbeamercolor{structure}{fg=haru-whiteblue, bg=haru-solidblue}%
+    \setbeamercolor{local structure}{fg=haru-darkblue,bg=haru-silver}
+    \setbeamercolor{footline1}{fg=haru-whiteblue,bg=haru-solidblue}%
+    \setbeamercolor{headline}{fg=haru-whiteblue,bg=white}
+    \setbeamercolor{footline2}{fg=haru-whiteblue,bg=haru-silver}%
+    \setbeamercolor{section in head/foot}{fg=haru-solidblue,bg=haru-solidblue}
+    \setbeamercolor{frametitle}{fg=haru-whiteblue}
+    \setbeamercolor{navigation symbols}{bg=haru-silver, fg=haru-grey}
+    \setbeamercolor{block body}{bg=haru-darkblue!70!haru-whiteblue,fg=white}
+    \setbeamercolor{block title}{bg=haru-darkblue,fg=haru-whiteblue}
+    \setbeamercolor{block body alerted}{fg=haru-darkblue,bg=haru-cyan1!70!haru-whiteblue}
+    \setbeamercolor{block title alerted}{bg=haru-cyan2,fg=haru-darkblue}
+    \setbeamercolor{block body example}{bg=haru-cromeblue!70!haru-whiteblue,fg=haru-darkblue}
+    \setbeamercolor{block title example}{bg=haru-cromeblue,fg=haru-whiteblue}
+  }{}
+  \ifstrequal{#1}{haru-tofc}{%
+    \setbeamercolor{normal text}{fg=haru-solidblue,bg=haru-whiteblue}%
+    \setbeamercolor{item}{fg=haru-solidblue}
+    \setbeamercolor{structure}{fg=haru-whiteblue, bg=haru-solidblue}%
+    \setbeamercolor{section in toc}{fg=haru-solidblue}
+    \setbeamercolor{section in toc shaded}{fg=haru-solidblue,bg=haru-solidblue}
+    \setbeamercolor{footline1}{fg=haru-whiteblue,bg=}
+    \setbeamercolor{footline2}{fg=haru-whiteblue,bg=}
+  }{}
+  \ifstrequal{#1}{haru-thanks}{
+    \setbeamercolor{normal text}{fg=haru-darkblue,bg=haru-whiteblue}
+    \setbeamercolor{headline}{fg=haru-whiteblue,bg=haru-solidblue}
+    \setbeamercolor{footline1}{fg=haru-whiteblue,bg=}
+    \setbeamercolor{footline2}{fg=haru-whiteblue,bg=}
+    \setbeamercolor{navigation symbols}{bg=haru-silver, fg=haru-grey}
+  }{}
+}
+
+% Thanks slide
+\newcommand{\haruthanks}{
+\begingroup
+  \themecolor{haru-thanks}
+  \setbeamertemplate{footline}{}
+  \headlinew{haru-thanks}
+  \setbeamertemplate{logo}{%
+  \begin{tikzpicture}[remember picture,overlay]
+  \node[xshift=1cm,yshift=1.4cm] at (current page.south west) {\pgfuseimage{logo}};
+  \end{tikzpicture}
+  }
+  \begin{frame}
+      \centering 
+      {\Huge\emph{¡Muchas gracias por escuchar!}}
+      \vskip12pt
+      {\tiny\emph{nestorjari784@gmail.com}}\\
+      {\tiny \emph{https://github.com/nestor784}}
+  \end{frame}
+\endgroup
+}
+
+% Set configuration of the table of contents slide.
+\AtBeginSection[]
+{
+\begingroup
+  \setbeamertemplate{logo}{}
+  \setbeamertemplate{footline}{}
+  \themecolor{haru-tofc}
+  \headlinew{haru-tofc}
+  \addtobeamertemplate{frametitle}{}{%
+  \begin{tikzpicture}[remember picture,overlay]
+  \node[xshift=-2cm,yshift=-1.4cm] at (current page.north east) {\pgfuseimage{logo}};
+  \end{tikzpicture}}
+  \setbeamertemplate{section in toc}[circle]
+  \begin{frame}
+  \frametitle{Tabla de Contenidos} 
+  \tableofcontents[currentsection]
+  \end{frame}
+\endgroup
+}
+
+
+% Maketitle
+\renewcommand{\maketitle}{
+  \usebackgroundtemplate{\tikz\node[opacity=0.7, inner sep=0] {\pgfuseimage{background}};}
+  \setbeamertemplate{logo}{%
+  \begin{tikzpicture}[remember picture,overlay]
+  \node[xshift=1cm,yshift=1.7cm] at (current page.south west) {\pgfuseimage{logo}};
+  \end{tikzpicture}
+  }
+  \themecolor{haru-title}
+  \headlinew{haru-title}
+  \begin{frame}
+    \titlepage
+  \end{frame}
+  \usebackgroundtemplate{}
+}
+
+\newenvironment{haru-frame}[1]{%
+  \begingroup
+  \setbeamertemplate{logo}{%
+  \begin{tikzpicture}[remember picture,overlay]
+  \node[xshift=1cm,yshift=1cm] at (current page.south west) {\pgfuseimage{logo_horz}};
+  \end{tikzpicture}
+  }
+  \themecolor{haru-main}
+  \headlinew{haru-main}
+  \setbeamertemplate{frametitle}{
+    \vspace*{3ex}
+    \begin{beamercolorbox}[wd=\paperwidth,ht=6mm,dp=3mm]{frametitle}
+      \usebeamerfont{frametitle}\enspace\insertframetitle
+    \end{beamercolorbox}
+  }
+  \begin{frame}{#1}
+  \hspace*{0.075\textwidth}%
+  \minipage{0.85\textwidth}%
+  \usebeamercolor[fg]{normal text}
+}{
+  \endminipage
+  \end{frame}
+  \endgroup
+}
+
+
+\setbeamertemplate{title page}{%
+  \begingroup
+	\hfill
+	\begin{beamercolorbox}[wd=0.7\textwidth,sep=10mm,rounded=true,center]{title}
+	{\usebeamerfont{title}\inserttitle}
+	\vspace*{5mm}
+
+	{\usebeamerfont{author}\insertauthor}
+	\end{beamercolorbox}
+	\hfill\hfill
+  \endgroup
+}
+
+
